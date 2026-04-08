@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fundo geral -->
+    <color name="colorBackground">#000000</color>
+
+    <!-- Botões numéricos (cinza escuro) -->
+    <color name="colorButtonNumber">#333333</color>
+
+    <!-- Botões de ação: AC, +/-, % (cinza claro) -->
+    <color name="colorButtonAction">#A5A5A5</color>
+
+    <!-- Botões de operadores: ÷, ×, −, +, = (laranja) -->
+    <color name="colorButtonOperator">#FF9500</color>
+
+    <!-- Botões científicos -->
+    <color name="colorButtonScientific">#2D2D2D</color>
+
+    <!-- Textos -->
+    <color name="colorTextPrimary">#FFFFFF</color>
+    <color name="colorTextOnAction">#000000</color>
+    <color name="colorTextScientific">#FF9500</color>
+
+    <!-- Status bar -->
+    <color name="colorStatusBar">#000000</color>
+
+    <!-- Compatibilidade -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

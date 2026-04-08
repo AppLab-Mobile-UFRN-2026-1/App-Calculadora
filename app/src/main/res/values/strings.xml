@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Calculadora Científica</string>
+
+    <!-- Display -->
+    <string name="display_default">0</string>
+
+    <!-- Botões numéricos -->
+    <string name="btn_0">0</string>
+    <string name="btn_1">1</string>
+    <string name="btn_2">2</string>
+    <string name="btn_3">3</string>
+    <string name="btn_4">4</string>
+    <string name="btn_5">5</string>
+    <string name="btn_6">6</string>
+    <string name="btn_7">7</string>
+    <string name="btn_8">8</string>
+    <string name="btn_9">9</string>
+    <string name="btn_dot">,</string>
+
+    <!-- Botões de ação -->
+    <string name="btn_clear">AC</string>
+    <string name="btn_plus_minus">+/−</string>
+    <string name="btn_percent">%</string>
+    <string name="btn_backspace">⌫</string>
+
+    <!-- Operadores -->
+    <string name="btn_divide">÷</string>
+    <string name="btn_multiply">×</string>
+    <string name="btn_subtract">−</string>
+    <string name="btn_add">+</string>
+    <string name="btn_equals">=</string>
+
+    <!-- Funções científicas -->
+    <string name="btn_sin">sin</string>
+    <string name="btn_cos">cos</string>
+    <string name="btn_tan">tan</string>
+    <string name="btn_pi">π</string>
+    <string name="btn_log">log</string>
+    <string name="btn_ln">ln</string>
+    <string name="btn_sqrt">√</string>
+    <string name="btn_e">e</string>
+    <string name="btn_pow">xʸ</string>
+    <string name="btn_open_paren">(</string>
+    <string name="btn_close_paren">)</string>
+    <string name="btn_factorial">n!</string>
+
+    <!-- Toggle -->
+    <string name="btn_toggle_sci_on">Sci ▲</string>
+    <string name="btn_toggle_sci_off">Sci ▼</string>
+
+    <!-- Toast -->
+    <string name="error_division_by_zero">Divisão por zero</string>
+    <string name="error_invalid_expression">Expressão inválida</string>
+</resources>

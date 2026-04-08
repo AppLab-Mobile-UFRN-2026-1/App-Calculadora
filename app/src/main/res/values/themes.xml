@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Base.Theme.Calculadora" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
+        <item name="android:navigationBarColor">@color/colorBackground</item>
+    </style>
+
+    <style name="Theme.Calculadora" parent="Base.Theme.Calculadora" />
+
+    <!-- Estilo base para todos os botões da calculadora -->
+    <style name="CalcButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:backgroundTint">@null</item>
+    </style>
+
+    <!-- Bottom sheet do histórico (fundo transparente para mostrar o drawable arredondado) -->
+    <style name="HistoryBottomSheet" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+    </style>
+</resources>
