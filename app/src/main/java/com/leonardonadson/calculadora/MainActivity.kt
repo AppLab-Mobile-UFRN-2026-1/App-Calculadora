@@ -202,6 +202,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onEquals() {
+        if (operand != null && currentInput.isEmpty()) {
+            currentInput = formatNumber(operand!!)
+        }
         if (operand != null && currentInput.isNotEmpty()) {
             val value = evalAsDouble(currentInput) ?: return
             val result = performOperation(operand!!, value, pendingOp)
