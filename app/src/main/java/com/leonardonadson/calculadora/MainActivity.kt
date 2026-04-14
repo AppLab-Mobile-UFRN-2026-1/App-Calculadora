@@ -363,7 +363,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun backspace() {
-        if (justCalculated) { clearAll(); return }
+        if (justCalculated) { justCalculated = false }
         if (currentInput.isNotEmpty()) {
             currentInput = when {
                 currentInput.endsWith("sin(") -> currentInput.dropLast(4)
