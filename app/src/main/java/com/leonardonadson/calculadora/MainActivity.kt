@@ -377,6 +377,12 @@ class MainActivity : AppCompatActivity() {
                 else                          -> currentInput.dropLast(1)
             }
             updateDisplay()
+        } else if (operand != null && pendingOp != null) {
+            currentInput = formatNumber(operand!!)
+            operand = null
+            pendingOp = null
+            expressionForDisplay = ""
+            updateDisplay()
         }
     }
 
@@ -512,7 +518,6 @@ class MainActivity : AppCompatActivity() {
         tvExpression.text = expressionForDisplay
         val raw = when {
             currentInput.isNotEmpty() -> currentInput
-            operand != null           -> formatNumber(operand!!)
             else                      -> "0"
         }
         tvDisplay.text = displayString(raw)
