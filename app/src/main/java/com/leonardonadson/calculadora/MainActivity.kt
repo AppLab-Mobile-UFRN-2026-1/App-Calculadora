@@ -154,6 +154,12 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        // Se currentInput é só o sinal unário "-", − cancela; outros operadores ignorados
+        if (currentInput == "-") {
+            if (op == "−") { currentInput = ""; updateDisplay() }
+            return
+        }
+
         val last = lastChar()
 
         // Após "(" só permite − (negativo unário dentro do parêntese)
