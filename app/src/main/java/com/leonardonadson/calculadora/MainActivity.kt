@@ -432,7 +432,7 @@ class MainActivity : AppCompatActivity() {
             "−"  -> a - b
             "×"  -> a * b
             "÷"  -> {
-                if (b == 0.0) { Toast.makeText(this, getString(R.string.error_division_by_zero), Toast.LENGTH_SHORT).show(); a }
+                if (b == 0.0) { Toast.makeText(this, getString(R.string.error_division_by_zero), Toast.LENGTH_SHORT).show(); Double.NaN }
                 else a / b
             }
             "^"  -> a.pow(b)
@@ -480,7 +480,7 @@ class MainActivity : AppCompatActivity() {
             var l = parsePow()
             while (pos < input.length) when (input[pos]) {
                 '*' -> { pos++; l *= parsePow() }
-                '/' -> { pos++; val r = parsePow(); if (r==0.0) Toast.makeText(this@MainActivity, getString(R.string.error_division_by_zero), Toast.LENGTH_SHORT).show(); l /= r }
+                '/' -> { pos++; val r = parsePow(); if (r == 0.0) { Toast.makeText(this@MainActivity, getString(R.string.error_division_by_zero), Toast.LENGTH_SHORT).show(); return Double.NaN } else l /= r }
                 else -> break
             }
             return l
