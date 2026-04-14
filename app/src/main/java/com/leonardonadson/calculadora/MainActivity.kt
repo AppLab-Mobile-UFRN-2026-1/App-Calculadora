@@ -352,7 +352,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyFactorial() {
         justCalculated = false
-        val n = currentInput.toDoubleOrNull()
+        val n = evalAsDouble(currentInput)
         if (n != null && n >= 0 && n == floor(n) && n <= 20) {
             val result = factorial(n.toLong())
             addToHistory("${formatForDisplay(n)}!", formatForDisplay(result.toDouble()))
@@ -396,12 +396,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toggleSign() {
-        val value = currentInput.toDoubleOrNull() ?: return
+        val value = evalAsDouble(currentInput) ?: return
         currentInput = formatNumber(-value); updateDisplay()
     }
 
     private fun applyPercent() {
-        val value = currentInput.toDoubleOrNull() ?: return
+        val value = evalAsDouble(currentInput) ?: return
         currentInput = formatNumber(value / 100.0); updateDisplay()
     }
 
