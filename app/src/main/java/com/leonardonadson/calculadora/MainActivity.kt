@@ -141,6 +141,9 @@ class MainActivity : AppCompatActivity() {
         updateDisplay()
     }
 
+    private fun evalAsDouble(expr: String): Double? =
+        expr.toDoubleOrNull() ?: try { evaluateExpression(expr) } catch (_: Exception) { null }
+
     // ─── Operadores ───────────────────────────────────────────────────────────
     private fun onOperator(op: String) {
         justCalculated = false
@@ -171,7 +174,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Modo simples: currentInput é um número isolado → usa operand/pendingOp
-        val value = currentInput.toDoubleOrNull()
+        val value = evalAsDouble(currentInput)
         if (value != null) {
             if (operand == null) {
                 operand = value
@@ -194,7 +197,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun onEquals() {
         if (operand != null && currentInput.isNotEmpty()) {
-            val value = currentInput.toDoubleOrNull() ?: return
+            val value = evalAsDouble(currentInput) ?: return
             val result = performOperation(operand!!, value, pendingOp)
             val exprStr = "$expressionForDisplay ${formatForDisplay(value)}"
             addToHistory(exprStr, formatForDisplay(result))
