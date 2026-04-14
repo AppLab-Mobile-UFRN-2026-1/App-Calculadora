@@ -554,9 +554,9 @@ class MainActivity : AppCompatActivity() {
         '-' to '⁻', '(' to '⁽', ')' to '⁾', '+' to '⁺', ',' to ','
     )
 
-    /** Converte para display: ponto→vírgula e ^exp → expoente superscript */
+    /** Converte para display: ponto→vírgula, *→×, ^exp → expoente superscript */
     private fun displayString(s: String): String {
-        val src = s.replace(".", ",")
+        val src = s.replace(".", ",").replace("*", "×")
         val sb = StringBuilder()
         var i = 0
         while (i < src.length) {
