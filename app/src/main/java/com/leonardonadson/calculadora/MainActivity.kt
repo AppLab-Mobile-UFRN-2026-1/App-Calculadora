@@ -340,7 +340,7 @@ class MainActivity : AppCompatActivity() {
                 val close = currentInput.count { it == ')' }
                 if (open <= close) return
                 // Não fecha após operador ou "(" (seria "( )" vazio)
-                if (last == null || last.isBinaryOp() || last == '(' || last == '^') return
+                if (last == null || last.isBinaryOp() || last == '(' || last == '^' || last == '-') return
                 // Não fecha após ponto decimal solto
                 if (last == '.') currentInput = currentInput.dropLast(1)
                 currentInput += ")"
