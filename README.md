@@ -6,7 +6,10 @@
 Uma calculadora Android nativa inspirada no design da calculadora do iOS. O aplicativo oferece dois modos de operação — padrão e científico —, um avaliador de expressões com parser recursivo descendente, feedback tátil em todos os botões, histórico persistente e layouts adaptativos para retrato e paisagem.
 
 ## 📸 Demonstração
+
+
 https://github.com/user-attachments/assets/bc977116-947c-49b0-b8cd-3c465f736500
+
 ---
 
 ## ✨ Funcionalidades
