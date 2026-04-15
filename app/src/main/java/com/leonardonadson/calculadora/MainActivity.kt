@@ -141,6 +141,9 @@ class MainActivity : AppCompatActivity() {
         updateDisplay()
     }
 
+    private fun evalAsDouble(expr: String): Double? =
+        expr.toDoubleOrNull() ?: try { evaluateExpression(expr) } catch (_: Exception) { null }
+
     // ─── Operadores ───────────────────────────────────────────────────────────
     private fun onOperator(op: String) {
         justCalculated = false
@@ -148,6 +151,12 @@ class MainActivity : AppCompatActivity() {
         // Expressão vazia: só permite − como negativo unário
         if (currentInput.isEmpty()) {
             if (op == "−") { currentInput = "-"; updateDisplay() }
+            return
+        }
+
+        // Se currentInput é só o sinal unário "-", − cancela; outros operadores ignorados
+        if (currentInput == "-") {
+            if (op == "−") { currentInput = ""; updateDisplay() }
             return
         }
 
@@ -171,7 +180,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Modo simples: currentInput é um número isolado → usa operand/pendingOp
-        val value = currentInput.toDoubleOrNull()
+        val value = evalAsDouble(currentInput)
         if (value != null) {
             if (operand == null) {
                 operand = value
@@ -193,8 +202,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onEquals() {
+        if (operand != null && currentInput.isEmpty()) {
+            currentInput = formatNumber(operand!!)
+        }
         if (operand != null && currentInput.isNotEmpty()) {
-            val value = currentInput.toDoubleOrNull() ?: return
+            val value = evalAsDouble(currentInput) ?: return
             val result = performOperation(operand!!, value, pendingOp)
             val exprStr = "$expressionForDisplay ${formatForDisplay(value)}"
             addToHistory(exprStr, formatForDisplay(result))
@@ -331,7 +343,7 @@ class MainActivity : AppCompatActivity() {
                 val close = currentInput.count { it == ')' }
                 if (open <= close) return
                 // Não fecha após operador ou "(" (seria "( )" vazio)
-                if (last == null || last.isBinaryOp() || last == '(' || last == '^') return
+                if (last == null || last.isBinaryOp() || last == '(' || last == '^' || last == '-') return
                 // Não fecha após ponto decimal solto
                 if (last == '.') currentInput = currentInput.dropLast(1)
                 currentInput += ")"
@@ -343,7 +355,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyFactorial() {
         justCalculated = false
-        val n = currentInput.toDoubleOrNull()
+        val n = evalAsDouble(currentInput)
         if (n != null && n >= 0 && n == floor(n) && n <= 20) {
             val result = factorial(n.toLong())
             addToHistory("${formatForDisplay(n)}!", formatForDisplay(result.toDouble()))
@@ -363,7 +375,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun backspace() {
-        if (justCalculated) { clearAll(); return }
+        if (justCalculated) { justCalculated = false }
         if (currentInput.isNotEmpty()) {
             currentInput = when {
                 currentInput.endsWith("sin(") -> currentInput.dropLast(4)
@@ -377,16 +389,22 @@ class MainActivity : AppCompatActivity() {
                 else                          -> currentInput.dropLast(1)
             }
             updateDisplay()
+        } else if (operand != null && pendingOp != null) {
+            currentInput = formatNumber(operand!!)
+            operand = null
+            pendingOp = null
+            expressionForDisplay = ""
+            updateDisplay()
         }
     }
 
     private fun toggleSign() {
-        val value = currentInput.toDoubleOrNull() ?: return
+        val value = evalAsDouble(currentInput) ?: return
         currentInput = formatNumber(-value); updateDisplay()
     }
 
     private fun applyPercent() {
-        val value = currentInput.toDoubleOrNull() ?: return
+        val value = evalAsDouble(currentInput) ?: return
         currentInput = formatNumber(value / 100.0); updateDisplay()
     }
 
@@ -417,7 +435,7 @@ class MainActivity : AppCompatActivity() {
             "−"  -> a - b
             "×"  -> a * b
             "÷"  -> {
-                if (b == 0.0) { Toast.makeText(this, getString(R.string.error_division_by_zero), Toast.LENGTH_SHORT).show(); a }
+                if (b == 0.0) { Toast.makeText(this, getString(R.string.error_division_by_zero), Toast.LENGTH_SHORT).show(); Double.NaN }
                 else a / b
             }
             "^"  -> a.pow(b)
@@ -465,7 +483,7 @@ class MainActivity : AppCompatActivity() {
             var l = parsePow()
             while (pos < input.length) when (input[pos]) {
                 '*' -> { pos++; l *= parsePow() }
-                '/' -> { pos++; val r = parsePow(); if (r==0.0) Toast.makeText(this@MainActivity, getString(R.string.error_division_by_zero), Toast.LENGTH_SHORT).show(); l /= r }
+                '/' -> { pos++; val r = parsePow(); if (r == 0.0) { Toast.makeText(this@MainActivity, getString(R.string.error_division_by_zero), Toast.LENGTH_SHORT).show(); return Double.NaN } else l /= r }
                 else -> break
             }
             return l
@@ -512,7 +530,6 @@ class MainActivity : AppCompatActivity() {
         tvExpression.text = expressionForDisplay
         val raw = when {
             currentInput.isNotEmpty() -> currentInput
-            operand != null           -> formatNumber(operand!!)
             else                      -> "0"
         }
         tvDisplay.text = displayString(raw)
@@ -540,9 +557,9 @@ class MainActivity : AppCompatActivity() {
         '-' to '⁻', '(' to '⁽', ')' to '⁾', '+' to '⁺', ',' to ','
     )
 
-    /** Converte para display: ponto→vírgula e ^exp → expoente superscript */
+    /** Converte para display: ponto→vírgula, *→×, ^exp → expoente superscript */
     private fun displayString(s: String): String {
-        val src = s.replace(".", ",")
+        val src = s.replace(".", ",").replace("*", "×")
         val sb = StringBuilder()
         var i = 0
         while (i < src.length) {
